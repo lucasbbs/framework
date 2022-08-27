@@ -240,6 +240,10 @@ var UserForm = /*#__PURE__*/function (_View_1$View) {
 
     _this = _super.apply(this, arguments);
 
+    _this.onSaveClick = function () {
+      _this.model.save();
+    };
+
     _this.onSetNameClick = function () {
       var input = _this.parent.querySelector('input');
 
@@ -264,13 +268,14 @@ var UserForm = /*#__PURE__*/function (_View_1$View) {
     value: function eventsMap() {
       return {
         'click:button#set-age': this.onSetAgeClick,
-        'click:button#set-name': this.onSetNameClick
+        'click:button#set-name': this.onSetNameClick,
+        'click:button#save-model': this.onSaveClick
       };
     }
   }, {
     key: "template",
     value: function template() {
-      return "\n    <div>\n      <h1>User Form</h1>\n      <div>User name: ".concat(this.model.get('name'), "</div>\n      <div>User age: ").concat(this.model.get('age'), "</div>\n      <input type=\"text\">\n      <button id=\"set-name\">Change Name</button>\n      <button id=\"set-age\">Set Random Age</button>\n    </div>\n    ");
+      return "\n    <div>\n      <input value=\"".concat(this.model.get('name'), "\" type=\"text\">\n      <button id=\"set-name\">Change Name</button>\n      <button id=\"set-age\">Set Random Age</button>\n      <button id=\"save-model\">Save</button>\n    </div>\n    ");
     }
   }]);
 
