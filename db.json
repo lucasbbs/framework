@@ -24,6 +24,16 @@
       "name": "Lucas Breno de Souza Noronha Braga",
       "age": 20,
       "id": 5
+    },
+    {
+      "name": "Teste",
+      "age": 11,
+      "id": 6
+    },
+    {
+      "name": "Testando a inserção de nomes",
+      "age": 11,
+      "id": 7
     }
   ]
 }
