@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { Attributes } from './Attributes';
 import { Eventing } from './Eventing';
-import { Sync } from './Sync';
+import { ApiSync } from './ApiSync';
 
 export interface UserProps {
   name?: string;
@@ -13,7 +13,7 @@ const rootUrl = 'http://localhost:3000/users';
 
 export class User {
   public events: Eventing = new Eventing();
-  public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
+  public sync: ApiSync<UserProps> = new ApiSync<UserProps>(rootUrl);
   public attributes: Attributes<UserProps>;
 
   constructor(attrs: UserProps) {
