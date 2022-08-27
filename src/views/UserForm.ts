@@ -1,22 +1,17 @@
-import { User } from '../models/User';
+import { User, UserProps } from '../models/User';
+import { View } from './View';
 
-export class UserForm {
-  constructor(public parent: Element, public model: User) {
-    this.bindModel();
-  }
-
-  bindModel(): void {
-    this.model.on('change', () => {
-      this.render();
-    });
-  }
-
+export class UserForm extends View<User, UserProps> {
   eventsMap(): { [key: string]: () => void } {
     return {
       'click:button#set-age': this.onSetAgeClick,
       'click:button#set-name': this.onSetNameClick,
+      'click:button#save-model': this.onSaveClick,
     };
   }
+  onSaveClick = (): void => {
+    this.model.save();
+  };
 
   onSetNameClick = (): void => {
     const input = this.parent.querySelector('input');
@@ -26,6 +21,7 @@ export class UserForm {
       this.model.set({ name });
     }
   };
+
   onSetAgeClick = (): void => {
     this.model.setRandomAge();
   };
@@ -33,33 +29,11 @@ export class UserForm {
   template(): string {
     return `
     <div>
-      <h1>User Form</h1>
-      <div>User name: ${this.model.get('name')}</div>
-      <div>User age: ${this.model.get('age')}</div>
-      <input type="text">
+      <input value="${this.model.get('name')}" type="text">
       <button id="set-name">Change Name</button>
       <button id="set-age">Set Random Age</button>
+      <button id="save-model">Save</button>
     </div>
     `;
-  }
-
-  bindEvents(fragment: DocumentFragment): void {
-    const eventsMap = this.eventsMap();
-    for (const eventKey in eventsMap) {
-      const [eventName, selector] = eventKey.split(':');
-      fragment.querySelectorAll(selector).forEach((element) => {
-        element.addEventListener(eventName, eventsMap[eventKey]);
-      });
-    }
-  }
-
-  render(): void {
-    this.parent.innerHTML = '';
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-
-    this.bindEvents(templateElement.content);
-
-    this.parent.append(templateElement.content);
   }
 }
